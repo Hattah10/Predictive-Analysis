@@ -1,0 +1,206 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>PredictionBC</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+
+  <!-- Boxicon icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Datatable -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  {% block Navbar %}
+    {% include "base/nav.html" %}
+   {% endblock Navbar %} 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Machine Learning</span>
+      </a>
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include "base/sidebar.html" %}
+   {% endblock sidebar %} 
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Student Performance Prediction</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Student Performance Prediction</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+            <div class="row justify-content-center ">
+                <div class="col-md-5 form-wrap mr-4 mb-2">
+                  <form action='{% url 'predictSP' %}' method='POST' autocomplete="on" >
+                    {% csrf_token %}
+ 
+                        <div class="text-center mb-3" >           
+                          <h3 style="font-weight: bold;">Student Information</h3>
+                        </div>
+                                    
+
+                      <div>
+                        <label for="hrs_study">Total Hours Spent Studying per Week</label>
+                        <div class="input-group mb-3">
+                            <input type="number" name="hrs_study" id="hrs_study" class="form-control">
+                            <span class="input-group-text">Hour/s</span>
+                        </div>
+                      </div>
+
+                        <div class="mb-3">
+                            <label for="prev_score">Scores in Previous Tests</label>
+                            <input type="number" name="prev_score" id="prev_score" class="form-control">
+                        </div>
+
+
+                       <div>
+                                <label for="extra_act" class="form-label">Participates in Extracurricular Activities:</label>
+                                <div class="mb-3" style="width: 100%;">
+                                    <select class="form-select" name="extra_act" id="extra_act" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                    </select>
+                                </div>
+                       </div>
+                       
+                       <div>
+                        <label for="sleep_hrs">Average Daily Sleep Hours:</label>
+                        <div class="input-group mb-3">
+                            <input type="number" name="sleep_hrs" id="sleep_hrs" class="form-control">
+                            <span class="input-group-text">Hour/s</span>
+                        </div>
+                      </div>
+
+
+                      <div>
+                        <label for="question_papers">Number of Sample Question Papers Practiced</label>
+                        <div class="input-group mb-3">
+                            <input type="number" name="question_papers" id="question_papers" class="form-control">
+                        </div>
+                      </div>
+
+                        <div class="">
+                              <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="col-md-5 mb-2" >
+                        <div class="form-wrap" style="padding: 20px;">
+                            <div class="text-center mt-10" >           
+                            <h3>Result</h3>
+                            </div>
+
+                
+                            <div>
+                                <h1 class="text-center" style="color: rgb(11, 11, 147);">{{ Prediction }}</h1>
+                                {% if Prediction >= 90 %}
+                                <p>Congratulations! Your performance is excellent. Keep up the good work!</p>
+                                <p class="mt-4"><i>Notes:</i> 
+                                    It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                                  </p>
+                                {% elif Prediction >= 70 %}
+                                    <p>Great job! Your performance is good. Continue to strive for improvement.</p>
+                                    <p class="mt-4"><i>Notes:</i> 
+                                        It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                                      </p>
+                                {% elif Prediction >= 50 %}
+                                    <p>Keep going! Your performance is satisfactory. There's room for improvement, so stay motivated.</p>
+                                    </p>
+                                    <p class="mt-4"><i>Notes:</i> 
+                                        It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                                      </p>
+                                {% elif Prediction >= 10 %}
+                                <p>Your performance index is at the minimum level. Consider seeking assistance and putting in extra effort for improvement.</p>
+                                <p class="mt-4"><i>Notes:</i> 
+                                    It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                                  </p>
+                                {% else %}
+                                    <img src="{% static 'img/result.svg' %}" alt="result" style="width: 80%;" class="ml-4" >
+                                {% endif %}
+
+                            
+                             </div>
+                    </div>
+                </div>
+ 
+            </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+   <!-- add modal -->
+   {% block class_add %}
+   {% include "crud/classify_add.html" %}
+   {% endblock class_add %} 
+
+  <!-- edit modal -->
+  {% block class_edit %}
+  {% include "crud/classify_edit.html" %}
+  {% endblock class_edit %} 
+
+  <!-- Control Sidebar and footer -->
+  {% block footer %}
+  {% include "base/footer.html" %}
+  {% endblock footer %} 
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+    {% block js %}
+    {% include "base/js.html" %}
+    {% endblock js %} 
+
+</body>
+
+</html>

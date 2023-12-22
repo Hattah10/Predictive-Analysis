@@ -1,0 +1,14 @@
+td a {
+    text-decoration: none;
+}
+td a i {
+    font-size: 1.3rem;
+}
+
+.bx-edit {
+    color: rgb(200, 195, 42);
+} 
+
+.bx-trash {
+    color: red;
+}

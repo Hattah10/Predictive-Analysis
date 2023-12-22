@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>PredictionBC</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+
+  <!-- Boxicon icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Datatable -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  {% block Navbar %}
+    {% include "base/nav.html" %}
+   {% endblock Navbar %} 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Machine Learning</span>
+      </a>
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include "base/sidebar.html" %}
+   {% endblock sidebar %} 
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Student Performance Training Model</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Student Performance Training Model</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+            <div class="row justify-content-center ">
+                <div class="col-md-5 form-wrap mr-4 mb-2">
+                  <form method="post" action="{% url 'train_modelSP' %}">
+                    {% csrf_token %}
+
+                    <p>Click the "Train Model" button below to initiate the training process:</p>
+                    <input type="submit" class="btn btn-primary" value="Train model">
+                    <!-- <button type="button" name="save_model">Save Model</button> -->
+                  
+                                      
+                                      <!-- Add this modal at the end of your HTML body -->
+                    <div class="modal" id="successModal">
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                  <h4 class="modal-title">Model Trained Successfully</h4>
+                                  <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                              </div>
+
+                              <!-- Modal Body -->
+                              <div class="modal-body">
+                                    <p>The model has been trained successfully.</p>
+                                    <p id="accuracyValue"></p>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                          </div>
+                      </div>
+                    </div>
+                                      
+                  
+                  
+                  </form>
+                </div>
+                
+ 
+            </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+   <!-- add modal -->
+
+
+
+  <!-- Control Sidebar and footer -->
+  {% block footer %}
+  {% include "base/footer.html" %}
+  {% endblock footer %} 
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+   <!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+
+<!-- Bootsrap 5.3 -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
+
+<!-- Add this script at the end of your HTML body -->
+<script>
+  // Function to show the success message and modal
+  function showSuccessMessage(accuracy) {
+    $('#accuracyValue').text('The Mean Absolute Error ' + accuracy); 
+    $('#successModal').modal('show');
+    
+  }
+
+  // Submit the form using AJAX
+  $(document).ready(function () {
+      $('form').submit(function (e) {
+          e.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: '{% url "train_modelSP" %}',
+              data: $(this).serialize(),
+              success: function (data) {
+                  if (data.success) {
+                      // If the response indicates success, show the success message and modal
+                      showSuccessMessage(data.Accuracy);
+             
+
+                  }
+              }
+          });
+      });
+  });
+</script>
+
+
+</script>
+</html>

@@ -1,0 +1,149 @@
+{% load static %}
+
+
+<div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static 'dist/img/avatar.png' %}" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">
+          
+          {% if user.is_authenticated %}
+          <p>Welcome, {{ user.username }}!</p>
+          {% else %}
+          <p>You are not logged in.</p>
+          {% endif %}
+      
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+             {% url 'dashboard' as dashboard_url %}
+             {% url 'dashboardSP' as dashboardSP_url  %}
+          <li class="nav-item has-treeview {% if request.path == dashboard_url or request.path == dashboardSP_url %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if request.path == dashboard_url or request.path == dashboardSP_url %}active{% endif %}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+                Dashboard
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ dashboard_url }}" class="nav-link {% if request.path == dashboard_url %}active{% endif %}">
+                <i class='bx bxs-virus nav-icon' ></i>      
+                    <p>Breast Cancer</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ dashboardSP_url }}" class="nav-link {% if request.path == dashboardSP_url %}active{% endif %}">
+                <i class='bx bxs-graduation nav-icon'></i>
+                <p>Student Performance</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        {% url 'predictBC' as predictBC_url  %}
+        {% url 'predictSP' as predictSP_url %}
+        <!-- Prediction -->
+        <li class="nav-item has-treeview {% if request.path == predictBC_url or request.path == predictSP_url %}menu-open{% endif %}">
+            <a href="#" class="nav-link {% if request.path == predictBC_url or request.path == predictSP_url %}active{% endif %} ">
+                <i class='bx bx-analyse nav-icon'></i><p>
+                Prediction
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+
+                <a href="{{ predictBC_url }}" class="nav-link {% if request.path == predictBC_url %}active{% endif %} ">
+                    <i class='bx bxs-virus nav-icon' ></i>      
+                    <p>Breast Cancer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+               
+
+                <a href="{{ predictSP_url }}" class="nav-link {% if request.path == predictSP_url %}active{% endif %}">
+                    <i class='bx bxs-graduation nav-icon'></i>
+                    <p>Student Performance</p>
+                </a>
+              </li>
+            </ul>
+          </li>  
+
+          {% url 'view_BC' as view_BC_url %}
+          {% url 'view_SP' as view_SP_url %}
+
+        <!-- Table -->
+        <li class="nav-item has-treeview {% if request.path == view_BC_url or request.path == view_SP_url %}menu-open{% endif %}">
+            <a href="#" class="nav-link {% if request.path == view_BC_url or request.path == view_SP_url %}active{% endif %} ">
+                <i class='bx bx-table nav-icon' ></i>   
+                <p>
+                    Dataset
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ view_BC_url }}" class="nav-link {% if request.path == view_BC_url %}active{% endif %}">
+                    <i class='bx bxs-virus nav-icon' ></i>      
+                    <p>Breast Cancer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ view_SP_url }}" class="nav-link {% if request.path == view_SP_url %}active{% endif %}">
+                    <i class='bx bxs-graduation nav-icon'></i>
+                    <p>Student Performance</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
+          {% url 'train_modelBC' as train_modelBC_url %}
+          {% url 'train_modelSP' as train_modelSP_url %}
+
+        <!-- Model -->
+        <li class="nav-item has-treeview {% if request.path == train_modelBC_url or request.path == train_modelSP_url %}menu-open{% endif %}">
+            <a href="#" class="nav-link {% if request.path == train_modelBC_url or request.path == train_modelSP_url %}active{% endif %}">
+                <i class='bx bx-bulb nav-icon'></i>   
+                <p>
+                    Model
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ train_modelBC_url }}" class="nav-link {% if request.path == train_modelBC_url %}active{% endif %}">
+                    <i class='bx bxs-virus nav-icon' ></i>      
+                    <p>Breast Cancer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ train_modelSP_url }}" class="nav-link {% if request.path == train_modelSP_url %}active{% endif %}">
+                    <i class='bx bxs-graduation nav-icon'></i>
+                    <p>Student Performance</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <p>
+              Logout
+              <i class='right bx bx-log-out'></i>
+            </p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>

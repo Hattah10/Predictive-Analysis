@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>Dashboard</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/crud.css' %}">
+
+  <!-- Boxicon icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Datatable -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  {% block Navbar %}
+    {% include "base/nav.html" %}
+   {% endblock Navbar %} 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Machine Learning</span>
+    </a>
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include "base/sidebar.html" %}
+   {% endblock sidebar %} 
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Student Performance Data</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Student Performance Data</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-dark-gray">
+                      <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h5 style="font-weight:600;" class="card-title">
+                                    Student Performance  
+                                </h5>
+                            </div>
+                            <div class="col-auto">
+                                <!-- Button trigger modal --> 
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#classifyAdd">
+                                    Add Data
+                                </button>
+                            </div>
+                        </div>
+                        
+                      </div>
+    
+                      <div class="card-body">
+                        <table id="myTable" class="display table table-hover" style="height: 300px;">
+                          <thead>
+                              <tr>
+                                 <th>ID</th>
+                                  <th>Hours Studied</th>
+                                  <th>Previous Score</th>
+                                  <th>Extracurricular Activities</th>
+                                  <th>Sleep Hours</th>
+                                  <th>Sample Question Papers Practiced</th>
+                                  <th>Performance </th>
+                                  <th>Action</th>
+
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for entry in SP_Data %}
+                              <tr>
+                                  <td>{{ entry.id }}</td>
+                                  <td>{{ entry.hrs_study }}</td>
+                                  <td>{{ entry.prev_score }}</td>
+                                  <td>{{ entry.extra_act }}</td>
+                                  <td>{{ entry.sleep_hrs }}</td>
+                                  <td>{{ entry.question_papers }}</td>
+                                  <td>{{ entry.Performance }}</td>
+                         
+                                  <td><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class='bx bx-edit ' ></i></a> 
+                                        <a href=""><i class='bx bx-trash' ></i></a>
+                               
+                                    </td>
+
+                                </tr>
+                              {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+        
+                  </div>
+ 
+            </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+   <!-- add modal -->
+   {% block class_add %}
+   {% include "crud/classify_add.html" %}
+   {% endblock class_add %} 
+
+  <!-- edit modal -->
+  {% block class_edit %}
+  {% include "crud/classify_edit.html" %}
+  {% endblock class_edit %} 
+
+  <!-- Control Sidebar and footer -->
+  {% block footer %}
+  {% include "base/footer.html" %}
+  {% endblock footer %} 
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+    {% block js %}
+    {% include "base/js.html" %}
+    {% endblock js %} 
+
+</body>
+</html>

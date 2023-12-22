@@ -1,0 +1,75 @@
+
+<div class="col-md-4 col-4 mb-3">
+  <div style="background: #007bff;" class="small-box shadow">
+      <div class="inner">
+        <h3>{{ bc_data_count }} </h3>
+        <p>Total Report</p>
+      </div>
+      <div class="icon"> 
+        <i class="bx bxs-bar-chart-alt-2"></i> </div>
+  </div>
+</div> 
+
+<div class="col-md-4 col-4">
+  <!-- small card for Male -->
+  <div style="background: #007bff;" class=" small-box shadow">
+      <div class="inner">
+        <h3>{{ count_prediction_1 }}</h3>
+        <p>Malignant Tumor Cells</p>
+      </div>
+      <div class="icon">
+        <i class='bx bxs-virus' ></i>
+      
+      </div>
+  </div>
+</div>
+
+<div class="col-md-4 col-4">
+  <!-- small card for Male -->
+  <div style="background: #007bff;" class="small-box shadow">
+      <div class="inner">
+        <h3>{{ count_prediction_0 }}</h3>
+        <p>Benign Tumor Cells</p>
+      </div>
+      <div class="icon">
+        <i class='bx bxs-virus-block'></i>
+      
+      </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h5 style="font-weight:600;" class="card-title">Clump Thickness</h5>
+      </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="clumpthicknessChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+
+
+
+  <div class="col-md-6">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h5 style="font-weight:600;" class="card-title">Cell Size</h5>
+      </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="cellsize_countChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+
+  

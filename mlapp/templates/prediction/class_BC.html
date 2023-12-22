@@ -1,0 +1,235 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>PredictionBC</title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+
+  <!-- Boxicon icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Datatable -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  {% block Navbar %}
+    {% include "base/nav.html" %}
+   {% endblock Navbar %} 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Machine Learning</span>
+    </a>
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include "base/sidebar.html" %}
+   {% endblock sidebar %} 
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Breast Cancer Prediction</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Breast Cancer Prediction</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+            <div class="row justify-content-center ">
+                <div class="col-md-5 form-wrap mr-4 mb-2">
+                  <form action="{% url 'predictBC' %}" method='POST' autocomplete="on" onsubmit="return validateForm()" >
+                    {% csrf_token %}
+ 
+                        <div class="text-center mb-2" >           
+                          <h3 style="font-weight: bold;">Cancer Cell Evaluation Form</h3>
+                        </div>
+                          <div class="">
+                              <label for="clumpthickness" class="form-label">Clump Thickness</label>
+                            <div class="d-flex">
+                              <input type="range" class="form-control mx-auto" name="clumpthickness" id="clumpthickness" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                              <output   class="ml-2 ">0</output>
+                           </div>
+                          </div>
+
+                          <div class="">
+                              <label for="cellsize" class="form-label">Cell Size</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="cellsize" id="cellsize" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output  class="ml-2">0</output>
+                              </div>
+                            
+                            </div>
+                      
+                          <div class="">
+                              <label for="cellshape" class="form-label">Uniformity of Cell Shape</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="cellshape" id="cellshape" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output class="ml-2">0</output>
+                              </div>
+                          </div>
+          
+                          <div class="">
+                              <label for="marginal" class="form-label">Marginal Adhesion</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="marginal" id="marginal" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output  class="ml-2">0</output>
+
+                              </div>
+                          </div>
+                          
+                          
+                          <div class="">
+                              <label for="singlesize" class="form-label">Single Epithelial Cell Size</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="singlesize" id="singlesize" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output  class="ml-2">0</output>
+                              </div>
+                          </div>
+                          
+                          <div class="">
+                              <label for="barenuclei" class="form-label">Bare Nuclei</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="barenuclei" id="barenuclei" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output class="ml-2">0</output>
+                              </div>
+                          </div>
+
+                          <div class="">
+                              <label for="blandchromatin" class="form-label">Bland Chromatin</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="blandchromatin" id="blandchromatin" value="0"  min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output  class="ml-2">0</output>
+                              </div>
+                          </div>
+
+                          <div class="">
+                              <label for="nucleoli" class="form-label">Normal Nucleoli</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="nucleoli" id="nucleoli" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output class="ml-2">0</output>
+
+                              </div>
+                          </div>
+
+                          <div class="">
+                              <label for="mitoses" class="form-label">Mitoses</label>
+                              <div class="d-flex">
+                                <input type="range" class="form-control" name="mitoses" id="mitoses" value="0"  min="0" max="10" oninput="this.nextElementSibling.value = this.value" required>
+                                <output  class="ml-2">0</output>
+                              </div>
+                              <div class="invalid-feedback">
+                                Please provide a number.
+                              </div>
+                          </div>
+
+                          
+
+                          <div class="">
+                              <button class="btn btn-primary" type="submit">Submit form</button>
+                          </div>
+                    </form>
+                </div>
+                
+                <div class="col-md-5  mb-2">
+                    <div class="form-wrap" style="padding: 20px;">
+                        <div class="text-center mt-10" >           
+                          <h3>Result</h3>
+                        </div>
+
+            
+                        <div>
+                          <h1 class="text-center" style="color: rgb(11, 11, 147);">{{ Prediction }}</h1>
+                          {% if Prediction == 'Malignant' %}
+                              <p>It is strongly recommended to consult a doctor for further evaluation and assurance.</p>
+                              <p class="mt-4"><i>Notes:</i> 
+                                It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                              </p>
+                              {% elif Prediction == 'Benign' %}
+                              <p>While it may not be an immediate cause for concern, it's important to observe any changes and consider consulting a doctor for professional advice.</p>
+                              <p class="mt-4"><i>Notes:</i> 
+                                It's important to note that predictive results are based on available data, and there may be certain limitations to the accuracy of these predictions.    
+                              </p>
+                          {% else %}
+                              <img src="{% static 'img/result.svg' %}" alt="result" style="width: 80%;" class="ml-4" >
+                          {% endif %}
+
+                        
+                      </div>
+                  </div>
+               
+                </div>
+ 
+            </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  
+  <!-- Control Sidebar and footer -->
+  {% block footer %}
+  {% include "base/footer.html" %}
+  {% endblock footer %} 
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+    {% block js %}
+    {% include "base/js.html" %}
+    {% endblock js %} 
+
+</body>
+<script>
+  function validateForm() {
+    var rangeInput = document.querySelector('input[type="range"]');
+      if (rangeInput.value == 0) {
+          rangeInput.setCustomValidity('Value must be greater than 0.');
+          rangeInput.reportValidity();
+          return false;
+      }
+      return true;
+  }
+</script>
+</html>

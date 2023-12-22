@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/login.css">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    
+    <div class="container container-custom px-2 py-5 mx-auto" style="border-radius: 20px;">
+        <div class="card card0 border-0">
+            <div class="row d-flex">
+                <div class="col-md-6 col1">
+                    <div class="card1 pb-5">
+                        <div class="row ">
+                            <!-- <img src="../../static/img/sign_up.svg" class="logo"> -->
+                            <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3 ml-4"
+                            style="opacity: .8; width: 40%;">
+                        
+                        </div>
+                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
+                            <img src="../../static/img/sign_up.svg" class="image">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col2">
+                    <div class="card2 card border-0 px-4 ">
+                        <form action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+
+                            <h2 class="py-3">Create an Account</h2>
+                            <div class="row px-3">
+                                <label class="mb-1"><h6 class="mb-0 text-sm">Username</h6></label>
+                                <input class="mb-3" type="text" name="username" placeholder="Enter your username">
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1"><h6 class="mb-0 text-sm">Email Address</h6></label>
+                                <input type="email" class="mb-3" type="text" name="email" placeholder="Enter a valid email address">
+                            </div>
+                            <div class="row px-3">
+                                <label class="mb-1"><h6 class="mb-0 text-sm">Password</h6></label>
+                                <input class="mb-3" type="password" name="password" placeholder="Enter password">
+                            </div>
+
+                            <div class="row mb-3 px-3">
+                                <button type="submit" class="btn btn-primary text-center">Sign Up</button>
+                            </div>
+
+                        </form>
+                        <div class="row px-3 mb-4 d-flex justify-content-center align-items-center">
+                            <div class="line"></div>
+                            <small class="or text-center">Or</small>
+                            <div class="line"></div>
+                            <h6 class="mb-0 mr-4 mt-2">Sign up with</h6>
+                        </div>
+                        
+                        <div class="row mb-4 px-3 d-flex justify-content-center">
+                            <div class="facebook text-center mr-3"><div class="fa fa-facebook"></div></div>
+                            <div class="twitter text-center mr-3"><div class="fa fa-twitter"></div></div>
+                            <div class="linkedin text-center mr-3"><div class="fa fa-linkedin"></div></div>
+                        </div>
+                        
+                        
+
+                        <div class="row mb-4 px-3">
+                            <small class="font-weight-bold">Already have an account? <a class="text-danger " href="{% url 'login' %}">Login</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-blue py-4">
+                <div class="row px-3">
+                    <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2023. All rights reserved.</small>
+                    <div class="social-contact ml-4 ml-sm-auto">
+                        <span class="fa fa-facebook mr-4 text-sm"></span>
+                        <span class="fa fa-google-plus mr-4 text-sm"></span>
+                        <span class="fa fa-linkedin mr-4 text-sm"></span>
+                        <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+</html>

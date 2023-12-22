@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>Dashboard</title>
+
+  <!-- Boxicon icons -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  {% block Navbar %}
+    {% include "base/nav.html" %}
+   {% endblock Navbar %} 
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Machine Learning</span>
+    </a>
+
+    <!-- Sidebar -->
+    {% block sidebar %}
+    {% include "base/sidebar.html" %}
+   {% endblock sidebar %} 
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          
+    
+
+           <!-- Graph -->
+            {% block chart %}
+            {% include "chart/class_chart.html" %}
+            {% endblock chart %} 
+
+
+
+
+
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar and footer -->
+  {% block footer %}
+  {% include "base/footer.html" %}
+  {% endblock footer %} 
+</div>
+<!-- ./wrapper -->
+
+
+<!-- REQUIRED SCRIPTS -->
+{% block js %}
+{% include "base/js.html" %}
+{% endblock js %} 
+</body>
+
+<script>
+  var ctx = document.getElementById('clumpthicknessChart').getContext('2d');
+
+  // Extract labels and data from the clumpthickness_sums data
+  var labels = [];
+  var data = [];
+  {% for entry in clumpthickness_sums|dictsort:"clumpthickness" %}
+      labels.push({{ entry.clumpthickness }});
+      data.push({{ entry.count }});
+  {% endfor %}
+
+  var chartData = {
+      labels: labels,
+      datasets: [{
+          label: 'Clump Thickness Values',
+          data: data,
+          backgroundColor: '#007bff',
+          borderColor: '#007bff',
+          borderWidth: 1
+      }]
+  };
+
+  var config = {
+      type: 'bar',
+      data: chartData,
+      options: {
+          scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false, // Hide grid lines for the x-axis
+                    },
+                },
+                x: {
+                    grid: {
+                        display: false, // Hide grid lines for the x-axis
+                    },
+                },
+            },
+          plugins: {
+            datalabels: {
+                display: 'auto',
+                color: 'black',
+                align: 'top',
+                anchor: 'end'
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+  };
+
+  var myChart = new Chart(ctx, config);
+
+  var cellsizectx = document.getElementById('cellsize_countChart').getContext('2d');
+
+// Extract labels and data from the clumpthickness_sums data
+var labels = [];
+var data = [];
+{% for entry in cellsize_count|dictsort:"cellsize" %}
+    labels.push({{ entry.cellsize }});
+    data.push({{ entry.count }});
+{% endfor %}
+
+var cellsizeData = {
+    labels: labels,
+    datasets: [{
+        label: 'Cell Size Values',
+        data: data,
+        backgroundColor: '#007bff',
+        borderColor: '#007bff',
+        borderWidth: 1
+    }]
+};
+
+var config = {
+    type: 'line',
+    data: cellsizeData,
+    options: {
+        scales: {
+              y: {
+                  beginAtZero: true,
+                  grid: {
+                      display: false, // Hide grid lines for the x-axis
+                  },
+              },
+              x: {
+                beginAtZero: true,
+
+                  grid: {
+                      display: false, // Hide grid lines for the x-axis
+                  },
+              },
+          },
+        plugins: {
+          datalabels: {
+              display: 'auto',
+              color: 'black',
+              align: 'top',
+              anchor: 'end'
+          }
+      }
+  },
+  plugins: [ChartDataLabels]
+};
+
+var mycellsize = new Chart(cellsizectx, config);
+</script>
+
+</html>
